@@ -14,33 +14,50 @@ use state::Game;
 widget_ids!(
     struct Ids {
         canvas,
-        text_edit
+        out_text,
+        in_text,
+        in_rect
     }
 );
 
 
-fn set_ui(ref mut ui: conrod::UiCell, ids: &Ids, out_text: &mut String, in_text: &mut String) {
-    use conrod::{color, widget, Colorable, Positionable, Sizeable, Widget};
+fn set_ui(ref mut ui: conrod::UiCell, ids: &Ids, in_text: &mut String, out_text: &mut String) {
+    use conrod::{color, widget, Colorable, Positionable, Sizeable, Borderable, Widget};
 
     widget::Canvas::new().color(color::DARK_CHARCOAL).set(ids.canvas, ui);
 
+    let canvas_size = ui.wh_of(ids.canvas).unwrap_or([250.0, 250.0]);
+
+    let in_height = 32.0;
+
+    let in_rect_border = 4.0;
+
     for out_edit in widget::TextEdit::new(out_text)
         .color(color::LIGHT_BLUE)
-        .padded_wh_of(ids.canvas, 20.0)
+        .h(canvas_size[1] - in_height)
         .mid_top_of(ids.canvas)
-        .align_text_x_middle()
+        .align_text_top()
+        .align_text_left()
         .line_spacing(2.5)
-        .set(ids.text_edit, ui) {
-        *out_text = out_edit;
+        .restrict_to_height(false)
+        .set(ids.out_text, ui) {
+
     }
+
+    widget::BorderedRectangle::new([canvas_size[0], in_height + in_rect_border * 2.0])
+        .border(in_rect_border)
+        .border_color(color::BLACK)
+        .mid_bottom_of(ids.out_text)
+        .set(ids.in_rect, ui);
 
     for in_edit in widget::TextEdit::new(in_text)
         .color(color::BLACK)
-        .padded_wh_of(ids.canvas, 20.0)
-        .mid_bottom_of(ids.canvas)
-        .align_text_x_middle()
+        .h(in_height)
+        .middle_of(ids.in_rect)
+        .align_text_left()
+        .padded_wh_of(ids.in_rect, in_rect_border)
         .line_spacing(2.5)
-        .set(ids.text_edit, ui) {
+        .set(ids.in_text, ui) {
         *in_text = in_edit;
     }
 }
@@ -71,8 +88,8 @@ fn main() {
 
     let image_map = conrod::image::Map::new();
 
-    let mut out_text = "".to_owned();
-    let mut in_text = "".to_owned();
+    let mut out_text = "Out Text".to_owned();
+    let mut in_text = "In Text".to_owned();
 
     let mut game = Game::new();
 

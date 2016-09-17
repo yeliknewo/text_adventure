@@ -90,7 +90,7 @@ fn process_yaml(yaml: &Yaml) -> Node {
         _ => (),
     }
     Node {
-        name: "".to_owned(),
-        choices: vec!(),
+        name: "Name".to_owned(),
+        choices: vec!(("Name".to_owned(), 0)),
     }
 }
