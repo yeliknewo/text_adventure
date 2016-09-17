@@ -1,1 +1,21 @@
-yaml: yaml
+leave:
+  enter: "You win"
+left_forest:
+  choices:
+    right:
+      target: middle_forest
+      text: "You go right"
+  enter: "You go into the left of the forest"
+middle_forest:
+  choices:
+    leave:
+      target: leave
+      text: "You leave the forest"
+  enter: "You go back to the middle of the forest"
+start_forest:
+  choices:
+    left:
+      target: left_forest
+      text: "You go left"
+  enter: "You enter a forest"
+start: start_forest

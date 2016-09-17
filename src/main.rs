@@ -28,18 +28,43 @@ fn set_ui(ref mut ui: conrod::UiCell, ids: &Ids, in_text: &mut String, out_text:
 
     let canvas_size = ui.wh_of(ids.canvas).unwrap_or([250.0, 250.0]);
 
+    let font_size = 24;
+
     let in_height = 64.0;
 
     let in_rect_border = 4.0;
 
-    for out_edit in widget::TextEdit::new(out_text)
+    let line_spacing = 2.5;
+
+    {
+        let increment = font_size as f64 + line_spacing;
+
+        let mut total_height = 0.0;
+
+        let max_height = canvas_size[1] - in_height - in_rect_border * 2.0;
+
+        for _ in out_text.lines() {
+            total_height += increment;
+        }
+
+        while total_height >= max_height {
+            while out_text.remove(0) != '\n' {
+
+            }
+            total_height -= increment;
+        }
+    }
+
+
+
+    for _ in widget::TextEdit::new(out_text)
         .color(color::LIGHT_BLUE)
-        .h(canvas_size[1] - in_height)
+        .h(canvas_size[1])
         .mid_top_of(ids.canvas)
         .align_text_top()
         .align_text_left()
-        .line_spacing(2.5)
-        .restrict_to_height(false)
+        .line_spacing(line_spacing)
+        .font_size(font_size)
         .set(ids.out_text, ui) {
 
     }
@@ -56,7 +81,7 @@ fn set_ui(ref mut ui: conrod::UiCell, ids: &Ids, in_text: &mut String, out_text:
         .middle_of(ids.in_rect)
         .align_text_left()
         .padded_wh_of(ids.in_rect, in_rect_border)
-        .line_spacing(2.5)
+        .line_spacing(line_spacing)
         .set(ids.in_text, ui) {
         *in_text = in_edit;
     }
@@ -88,8 +113,8 @@ fn main() {
 
     let image_map = conrod::image::Map::new();
 
-    let mut out_text = "Out Text".to_owned();
-    let mut in_text = "In Text".to_owned();
+    let mut out_text = "".to_owned();
+    let mut in_text = "".to_owned();
 
     let mut game = Game::new(assets);
 
@@ -101,9 +126,9 @@ fn main() {
         event.update(|_| {
             let in_text = &mut in_text;
             let mut clear = false;
-            for c in in_text.chars() {
-                if c == '\n' {
-                    game.process(&in_text, &mut out_text);
+            if in_text.contains('\n') {
+                for line in in_text.lines() {
+                    game.process(&line.to_string(), &mut out_text);
                     clear = true;
                     break;
                 }
