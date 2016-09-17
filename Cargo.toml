@@ -1,0 +1,10 @@
+[package]
+name = "text_adventure"
+version = "0.1.0"
+authors = ["Kiley Owen <yelikdev@gmail.com>"]
+
+[dependencies]
+yaml-rust = "*"
+conrod = "*"
+piston_window = "0.52.0"
+find_folder = "*"
