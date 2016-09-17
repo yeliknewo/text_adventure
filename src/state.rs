@@ -1,4 +1,4 @@
-use std::path::Path;
+use std::path::{PathBuf, Path};
 use std::io::{self, BufReader, BufRead};
 use std::fs::File;
 
@@ -9,21 +9,23 @@ pub struct Game {
     story: Vec<Node>,
     current_node: usize,
     state: State,
+    assets: PathBuf,
 }
 
 impl Game {
-    pub fn new() -> Self {
+    pub fn new(assets: PathBuf) -> Self {
         Game {
             story: vec!(),
             current_node: 0,
             state: State::Load,
+            assets: assets,
         }
     }
 
     pub fn process(&mut self, in_text: &String, out_text: &mut String) {
         match self.state {
             State::Load => {
-                if let Err(error) = open_story(in_text).map_err(|err| Error::Io(err)) {
+                if let Err(error) = open_story(self.assets.join(in_text)).map_err(|err| Error::Io(err)) {
                     println!("{:?}", error);
                 }
             },

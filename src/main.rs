@@ -28,7 +28,7 @@ fn set_ui(ref mut ui: conrod::UiCell, ids: &Ids, in_text: &mut String, out_text:
 
     let canvas_size = ui.wh_of(ids.canvas).unwrap_or([250.0, 250.0]);
 
-    let in_height = 32.0;
+    let in_height = 64.0;
 
     let in_rect_border = 4.0;
 
@@ -91,7 +91,7 @@ fn main() {
     let mut out_text = "Out Text".to_owned();
     let mut in_text = "In Text".to_owned();
 
-    let mut game = Game::new();
+    let mut game = Game::new(assets);
 
     while let Some(event) = window.next() {
         if let Some(e) = conrod::backend::piston_window::convert_event(event.clone(), &window) {
