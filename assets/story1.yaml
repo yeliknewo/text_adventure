@@ -1,0 +1,148 @@
+start: start_forest
+start_forest:
+    enter: You find yourself in a forest
+    choices:
+        forward:
+            target: forward_forest
+            text: you head deeper into the forest
+        right:
+            target: right_forest
+            text: you head to the right side of the forest
+        left:
+            target: left_forest
+            text: you head to the left side of the forest
+forward_forest:
+    enter: you come across a moose that looks iritable
+    choices:
+        run:
+            target: fleeing_moose
+            text: You flee from the moose
+        fight:
+            target: fighting_moose
+            text: you attack the moose
+        relax:
+            target: relaxing_at_moose
+            text: you relax as the moose approaches
+right_forest:
+    enter: You see this area of the forest has some weird mushrooms
+    choices:
+        eat them:
+            target: tripping_start
+            text: you eat the mushrooms
+        go back:
+            target: forward_forest
+            text: you get lost on your way back
+left_forest:
+    enter: this side of the forest is really boring
+    choices:
+        go back:
+            target: forward_forest
+            text: you get lost on your way back
+tripping_start:
+    enter: you feel a little weird
+    choices:
+        head on:
+            target: deep_forest_tripping
+            text: the forest starts to swim around you
+        go back:
+            target: forward_forest_tripping
+            text: you head back the way you came, more or less
+deep_forest_tripping:
+    enter: the forest gets weirder and weirder until it swallows you up
+forward_forest_tripping:
+    enter: you see a large mouse
+    choices:
+        run:
+            target: fleeing_mouse
+            text: you run away from the mouse. it chases you
+        fight:
+            target: fight_mouse
+            text: you fight the mouse
+        relax:
+            target: relaxing_at_mouse
+            text: you relax as the mouse approaches
+fleeing_moose:
+    enter: as you run from the moose it stops following you. you realize you are out of the woods
+    choices:
+        leave:
+            target: be_happy
+            text: you start to be happy
+relaxing_at_moose:
+    enter: the moose begins to eat your shirt
+    choices:
+        fight:
+            target: fighting_moose
+            text: you attack the moose
+        flee:
+            target: fighting_moose
+            text: you pull away from the moose
+fleeing_mouse:
+    enter: as you run away from the mouse it gets bigger and bigger
+    choices:
+        panic:
+            target: panic_attack
+            text: you have a panic attack
+        give up:
+            target: be_happy
+            text: you lose yourself in your own fear and gain a new world view
+relaxing_at_mouse:
+    enter: it seems to understand your motives. it curls up at your feet and turns into a dog
+    choices:
+        pet:
+            target: pet_dog
+            text: you pet dog mouse
+pet_dog:
+    enter: it turns into a mouse
+    choices:
+        pet:
+            target: pet_mouse
+            text: you pet the mouse dog
+pet_mouse:
+    enter: it turns into a dog
+    choices:
+        pet:
+            target: pet_dog2
+            text: you pet the dog mouse
+pet_dog2:
+    enter: it turns into a mouse
+    choices:
+        pet:
+            target: pet_mouse2
+            text: you pet the mouse dog
+        leave:
+            target: sad
+            text: you leave the weird animal behind
+pet_mouse2:
+    enter: it turns into a dog
+    choices:
+        explore:
+            target: left_forest
+            test: you explore for so long that your mind begins to clear
+sad:
+    enter: you begin to feel a shocking sense of loss when the mouse dog is gone
+    choices:
+        be strong:
+            target: sad_ending
+            text: you decide to be strong and keep going forward_forest
+        love:
+            target: love
+            text: you can't live without that mouse dog
+love:
+    enter: you break down in tears at the thought of the mouse being gone
+    choices:
+        go back:
+            target: love_ending
+            text: you run back to the mouse
+        give up:
+            target: sad_ending
+            text: you realize how alone you are now
+love_ending:
+    enter: you reunite with the mouse and you meld into one being and live in a state of perpetual joy
+sad_ending:
+    enter: you can't hold up under the stress of being alone. your body crumbles as you are overcome by a stress induced permanant coma
+fight_mouse:
+    enter: as you attack the mouse it shrinks under your blows. like physically. as you hit it, it gets smaller. You beat back your fear of animals
+fighting_moose:
+    enter: the moose fucks you up. its a fucking moose. you die
+be_happy:
+    enter: you achieve happiness
